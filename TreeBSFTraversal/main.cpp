@@ -138,6 +138,38 @@ void doBFSTraversal(Node *root) {
     }
 }
 
+int getHeight(Node* node) {
+    if (node == NULL) {
+        return 0;
+    } else {
+        
+        int leftHt = getHeight(node->left);
+        int rightHt = getHeight(node->right);
+        
+        int maxHt = leftHt > rightHt ? leftHt : rightHt;
+        return (maxHt + 1);
+    }
+}
+
+bool isBST(Node* node) {
+    if (node == NULL) {
+        return true;
+    }
+    if (node -> left != NULL && node -> left ->key > node -> key) {
+        return false;
+    }
+    
+    if (node -> right != NULL && node -> right -> key < node -> key ) {
+        return false;
+    }
+    
+    if (!isBST(node -> left) || !isBST(node -> right)) {
+        return false;
+    }
+    
+    return true;
+}
+
 int main(int argc, const char * argv[]) {
    //34 55 2 45 67 983 12 556 7 5
     cout << "Enter no of elements";
@@ -154,5 +186,9 @@ int main(int argc, const char * argv[]) {
     
     cout << endl<<"BFS traversal "<< endl;
     doBFSTraversal(root);
+    
+    cout << endl <<"Tree height: "<< getHeight(root) << endl;
+    
+    cout << " Is BST: " << isBST(root) << endl;
     return 0;
 }
